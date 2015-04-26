@@ -14,15 +14,23 @@ public class CalendarViewActivity extends Activity {
 	private int mMonth;
 	private int mDay;
 
+	private long mInitialDate;
+
 	@Override protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		CalendarView calendar = new CalendarView(this);
 		calendar.setOnDateChangeListener(mDateSetListener);
+		mInitialDate = calendar.getDate();
 		setContentView(calendar);
 	}
 
 	private CalendarView.OnDateChangeListener mDateSetListener = new CalendarView.OnDateChangeListener() {
 		@Override public void onSelectedDayChange(CalendarView view, int year, int monthOfYear, int dayOfMonth) {
+
+			if (view.getDate() == mInitialDate) {
+				return;
+			}
+
 			mYear = year;
 			mMonth = monthOfYear;
 			mDay = dayOfMonth;
